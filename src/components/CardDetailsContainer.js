@@ -1,15 +1,25 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 
 import Card from "./Card";
 import store from "../store/store";
+import { startFetchingCards } from "../saga/sags";
 
-export default function CardDetailsContainer() {
-  const id = +window.location.pathname.split("/")[2];
-  let [card, setCard] = useState();
+function CardDetailsContainer(props) {
   useEffect(() => {
-    setCard(() => store.getState().items.find((item) => item.id === id));
-  }, [id]);
+    if (store.getState().items.length === 0) {
+      store.dispatch(startFetchingCards);
+    }
+  }, []);
 
-  return <Card card={card} />;
+  return <Card card={props.card} />;
 }
+
+
+const mapStateToProps = (state, ownProps) => ({
+  card: state.items.find(item => item.id === ownProps.id),
+});
+
+
+export default connect(mapStateToProps)(CardDetailsContainer);

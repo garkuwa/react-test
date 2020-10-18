@@ -65,13 +65,12 @@ class App extends Component {
               <Navigation closeNav={this.closeNav} />
             </header>
             <Switch>
-              <Route path="/" render={() => <HomeContainer />}></Route>
-            </Switch>
-            <Switch>
-              <Route
-                path="/details/:id"
-                render={() => <CardDetailsContainer />}
-              ></Route>
+              <Route exact path="/details/:id" render={
+                (props) => <CardDetailsContainer id={+props.match.params.id} />
+              } />
+              <Route path="/" exact>
+                <HomeContainer />
+              </Route>
             </Switch>
           </div>
         </Provider>

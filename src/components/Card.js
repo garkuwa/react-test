@@ -4,7 +4,7 @@ import "./Card.css";
 
 const Card = (props) => {
   return (
-    <div className="front">
+    <div className={props.card?.animation}>
       <img src="juice.jpg" alt="Avatar" className="card-image" />
       <div className="container">
         <h3>{props.card?.title}</h3>
